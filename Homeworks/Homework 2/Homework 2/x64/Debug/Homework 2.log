@@ -1,0 +1,5 @@
+﻿  CharacterFrequencies.cpp
+  Source.cpp
+  Generating Code...
+D:\Programming\C++\Homwork 2\Homework 2\CharacterFrequencies.cpp(44): warning C4715: 'CharacterFrequencies::getFrequency': not all control paths return a value
+  Homework 2.vcxproj -> D:\Programming\C++\Homwork 2\Homework 2\x64\Debug\Homework 2.exe
