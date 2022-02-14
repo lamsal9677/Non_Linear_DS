@@ -15,10 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="HelloWorld.cpp">
+    <ClCompile Include="sortComparison.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="sorting.cpp">
+    <ClCompile Include="SortingAll.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
