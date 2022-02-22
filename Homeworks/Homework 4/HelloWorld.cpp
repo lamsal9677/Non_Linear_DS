@@ -6,20 +6,36 @@
 
 
 int main() {
-	//std::cout << "Hello World!";
 	
-	//double a[10];
-	//a[0] = 0;
-	//a[1] = 1;
-	//cout << a[0] + a[1];
 
+	BoundedArray arr3(50,500);
+	
+	cout << "Size: " << arr3.size() << " Capacity: " << arr3.capacity() << endl;
+	
+	arr3.clear();
+	cout << "CLEAR - " << "Size: " << arr3.size() << " Capacity: " << arr3.capacity() << endl;
+	
+	arr3.resize(20);
+	cout << "RESIZE - " << "Size: " << arr3.size() << " Capacity: " << arr3.capacity() << endl;
+	
+	arr3.push_back(1.0);
+	cout << "PUSH BACK - " << "Size: " << arr3.size() << " Capacity: " << arr3.capacity() << endl;
+	
+	arr3.pop_back();
+	cout << "POP BACK - " << "Size: " << arr3.size() << " Capacity: " << arr3.capacity() << endl;
+	
+	arr3.insert(1,2.99);
+	cout << "INSERT - " << "Size: " << arr3.size() << " Capacity: " << arr3.capacity() << endl;
+	
+	cout << "overload [] - " << "Value: " << arr3[1] << endl;
+	
+	cout << "At - " << "Value: " << arr3.at(1) << endl;
 
-	//BoundedArray arr1();
-	//std::cout << arr1.getx() << std::endl;
-	BoundedArray arr3(2);
+	arr3.erase(1);
+	cout <<"ERASE - " << "Size: " << arr3.size() << " Capacity: " << arr3.capacity() << endl;
 
-	//BoundedArrayConst arr4(1);
-	//cout << arr4.size();
+	
+
 
 	return 0;
 }

@@ -11,22 +11,27 @@ using namespace std;
 
 class BoundedArray {
 public:
-	BoundedArray();
-	BoundedArray(int numElements);
-	BoundedArray(int numElements, int maxNumElements);
+	BoundedArray(); //complete
+	BoundedArray(int numElements); //complete
+	BoundedArray(int numElements, int maxNumElements); //complete
+
+	int size(); //complete
+	int capacity(); //complete
 
 
-	void resize(int newSize);
-	//void resize_maxnumElements(int newSize);
+	double& operator[](int index);//complete
+	double& at(int index);//complete
+	double* data();//complete
 
 
-	void push_back(double value);
-	void pop_back();
-	void insert(int index, double value);
-	void erase(int index);
-	void clear();
+	void resize(int newSize);//done
+	void push_back(double value);//done
+	void pop_back();//done
+	void insert(int index, double value);//done
+	void erase(int index);//done
+	void clear();//done
 private:
-	int max_num_elements;
+	int maxNumElements;
 	int numElements;
 	double *elements;
 };
