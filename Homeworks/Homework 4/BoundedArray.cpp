@@ -1,17 +1,10 @@
-#include <string>
-#include <stdexcept>
 #include "BoundedArray.h"
-#include <iostream>
 
 
 BoundedArray::BoundedArray() {
-	maxNumElements = 100;
-	this->numElements = 0;
-
-	elements = new double[maxNumElements];
-	for (int i = 0; i < maxNumElements; i++)
-		elements[i] = 0;
+	
 }
+
 BoundedArray::BoundedArray(int numElements) {
 	maxNumElements = 100;
 	resize(numElements);
@@ -20,15 +13,19 @@ BoundedArray::BoundedArray(int numElements) {
 	for (int i = 0; i < maxNumElements; i++)
 		elements[i] = 0;
 }
+
 BoundedArray::BoundedArray(int numElements, int maxNumElements) {
-	this->maxNumElements = maxNumElements;
+	setMaxSize(maxNumElements);
 	resize(numElements);
-	
-	elements = new double[maxNumElements];
-	for (int i = 0; i < maxNumElements; i++)
-		elements[i] = 0;
 }
 
+BoundedArray::BoundedArray(BoundedArray& b) {
+	//copy
+}
+
+BoundedArray::~BoundedArray() {
+	delete elements;
+}
 
 
 
@@ -47,29 +44,39 @@ double& BoundedArray::at(int index) {
 		throw std::out_of_range("Invalid index " + std::to_string(index));
 	return operator[](index);
 }
-
-
-
 double* BoundedArray::data() {
 	return elements;
 }
 
 
-void BoundedArray::resize(int newSize) {
-	if (newSize > maxNumElements || newSize < 0) {
-		throw std::out_of_range("Invalid size " + std::to_string(newSize));
-	}
-	this->numElements = newSize;
+BoundedArray& BoundedArray::operator=(BoundedArray& b) {
+	numElements = b.size();
+	setMaxSize(b.capacity());
+
+	for (int i = 0; i < numElements; i++)
+		elements[i] = b[i];
+	for (int i = numElements; i < maxNumElements; i++)
+		elements[i] = 0;
+	
+	return *this;
 }
 
 
+void BoundedArray::resize(int newSize) {
+	if (newSize < 0) {
+		throw std::out_of_range("Invalid size " + std::to_string(newSize));
+	}
 
-
-
+	if (newSize > maxNumElements) {
+		increaseMaxSize(newSize);
+	}
+	for (int i = numElements; i < maxNumElements; i++)
+		elements[i] = 0;
+	this->numElements = newSize;
+}
 void BoundedArray::push_back(double value) {
 	if (numElements >= maxNumElements)
-		throw std::out_of_range("Array has reached its maximum capacity");
-
+		increaseMaxSize(0);
 	elements[numElements] = value;
 	numElements++;
 }
@@ -80,17 +87,24 @@ void BoundedArray::pop_back() {
 	numElements--;
 	elements[numElements] = 0;
 }
+
+
+
 void BoundedArray::insert(int index, double value) {
-	if (index >= numElements || index < 0)
+	if (index < 0)
 		throw std::out_of_range("Invalid index " + std::to_string(index));
+		
 	if (numElements >= maxNumElements)
-		throw std::out_of_range("Array has reached its maximum capacity");
+		increaseMaxSize(numElements + 1);
 
 	for (int i = numElements; i > index; i--)
 		elements[i] = elements[i - 1];
 	elements[index] = value;
 	numElements++;
 }
+
+
+
 void BoundedArray::erase(int index) {
 	if (index >= numElements || index < 0)
 		throw std::out_of_range("Invalid index " + std::to_string(index));
@@ -105,4 +119,29 @@ void BoundedArray::clear() {
 		elements[i] = 0;
 	}
 	numElements = 0;
+}
+
+void BoundedArray::setMaxSize(int maxNumElements) {
+	this->maxNumElements = maxNumElements;//set maxsize
+	double* elements_new = new double[maxNumElements];//declare new 
+	for (int i = 0; i < numElements && i < maxNumElements; i++) {//copy all data
+		elements_new[i] = elements[i];
+	}
+	delete elements;//remove old one
+	elements = elements_new;//assign new to old
+}
+
+
+void BoundedArray::increaseMaxSize(int newSize) {
+	//loop and increase maxNumElements unless it is bigger	
+	do
+		maxNumElements *= 2;
+	while (newSize > maxNumElements);
+
+	double* elements_new = new double[maxNumElements];//declare new 
+	for (int i = 0; i < numElements && i < maxNumElements; i++) {//copy all data
+		elements_new[i] = elements[i];
+	}
+	delete elements;//remove old one
+	elements = elements_new;//assign new to old
 }

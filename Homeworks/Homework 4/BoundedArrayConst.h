@@ -15,7 +15,7 @@ public:
 	int size();
 	// Return the maximum number of elements in the bounded array
 	int capacity();
-	// Return element at specified index with no error checking
+	// Return element  at specified index with no error checking
 	double& operator[](int index);
 	// Return element at specified index. Throw out of range exception for invalid
 	// index.
