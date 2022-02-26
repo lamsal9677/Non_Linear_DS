@@ -95,6 +95,35 @@ void HybridList::push_back(double value) {
 	numElements++;
 }
 
+void HybridList::pop_back() {
+	
+	if (tail->size() - 1 == 0) {
+		std::cout << "One index reduced in array" << std::endl;
+		tail->at(tail->size() - 1) = NULL;
+		std::cout << "Tail Moved ahead";
+	}
+
+	if (tail->size() - 2 >= 0) {
+		std::cout << "One index reduced in array2" << std::endl;
+		tail->at(tail->size() - 1) = NULL;
+		
+		HybridListNode* newTail = new HybridListNode(blockSize);
+		for (int i = 0; i < tail->size() - 1; i++) {
+			newTail->push_back(tail->at(i));
+		}
+		
+		HybridListNode* he = head->next;
+		while (he != nullptr) {
+			if (he->next = tail) {
+				he->next = newTail;
+				break;
+			}
+			he = he->next;
+		}
+		this->tail = newTail;
+	}
+}
+
 void HybridList::clear() {
 	HybridListNode* curNode = head, * nextNode = nullptr;
 	// Iterate through each node starting from the head and delete it
