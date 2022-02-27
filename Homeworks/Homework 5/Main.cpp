@@ -231,11 +231,19 @@ int main() {
 	//hListA.pop_back();
 	
 	hListA.erase(0);
+	hListA.erase(0);
+	hListA.erase(0);
+
+
+	hListA.erase(0);
+	hListA.erase(0);
+	hListA.erase(0);
+
 	//hListA.erase(1);
-	hListA.erase(2);
+	//hListA.erase(2);
 	//hListA.erase(3);
-	hListA.erase(4);
-	hListA.erase(4);
+	//hListA.erase(4);
+	//hListA.erase(4);
 	//hListA.erase(6);
 
 
