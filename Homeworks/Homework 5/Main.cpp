@@ -235,9 +235,14 @@ int main() {
 	hListA.erase(0);
 
 
-	hListA.erase(0);
-	hListA.erase(0);
-	hListA.erase(0);
+	hListA.erase(3);
+	hListA.erase(3);
+	hListA.erase(3);
+
+	//hListA.erase(3);
+
+
+	
 
 	//hListA.erase(1);
 	//hListA.erase(2);

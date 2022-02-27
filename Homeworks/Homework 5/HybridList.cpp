@@ -184,8 +184,7 @@ void HybridList::erase(int index) {
 	
 
 	HybridListNode* tempPointer = nullptr;
-	HybridListNode* currPrev = head;
-	HybridListNode* curr = head->next;
+
 	
 	int currInd = 0;
 	bool found = false;
@@ -194,7 +193,7 @@ void HybridList::erase(int index) {
 	for (int i = 0; i < head->size(); i++) {
 			
 		if (index == currInd) {
-			std::cout << "Removed Head :" << head->at(i);
+//			std::cout << "Removed Head :" << head->at(i);
 			found = true;
 		}
 		else {
@@ -204,15 +203,20 @@ void HybridList::erase(int index) {
 	}
 
 	if (found) {
+		if (tempPointer->size() == 0) {
+			head = head->next;
+			numBlocks--;
+			return;
+		}
+		
 		tempPointer->next = head->next;
 		head = nullptr;
 		head = tempPointer;
-
-		if (tempPointer->size() == 0) {
-			std::cout << "NULLLLLLLLLLLLLLLLL";
-		}
 		return;
 	}
+
+	HybridListNode* currPrev = head;
+	HybridListNode* curr = head->next;
 
 
 	while (curr != nullptr) {
@@ -220,7 +224,7 @@ void HybridList::erase(int index) {
 		tempPointer = new HybridListNode(blockSize);
 		for (int i = 0; i < curr->size(); i++) {
 			if (index == currInd) {
-				std::cout << "Removed :" << curr->at(i);
+//				std::cout << "Removed :" << curr->at(i);
 				found = true;
 			}
 			else {
@@ -230,6 +234,14 @@ void HybridList::erase(int index) {
 		}
 
 		if (found) {
+
+			if (tempPointer->size() == 0) {
+//				std::cout << "Null";
+				currPrev->next = curr->next;
+				numBlocks--;
+				return;
+			}
+
 			currPrev->next = tempPointer;
 			tempPointer->next = curr->next;
 			curr = nullptr;
