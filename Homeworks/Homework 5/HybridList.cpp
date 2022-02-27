@@ -97,31 +97,145 @@ void HybridList::push_back(double value) {
 
 void HybridList::pop_back() {
 	
-	if (tail->size() - 1 == 0) {
-		std::cout << "One index reduced in array" << std::endl;
-		tail->at(tail->size() - 1) = NULL;
-		std::cout << "Tail Moved ahead";
+	//if no element in the list then throw an exception
+	if (head == nullptr) {
+		throw std::out_of_range("List has no elements");
+		return;
 	}
 
-	if (tail->size() - 2 >= 0) {
-		std::cout << "One index reduced in array2" << std::endl;
-		tail->at(tail->size() - 1) = NULL;
-		
-		HybridListNode* newTail = new HybridListNode(blockSize);
-		for (int i = 0; i < tail->size() - 1; i++) {
-			newTail->push_back(tail->at(i));
+
+	//if there is 1 element in our Node
+	if (tail->size() - 1 == 0) {
+		HybridListNode* curr = head->next;
+		//if there is only 1 Node
+		if (curr == nullptr) {
+			head = nullptr;
+			tail = nullptr;
+			numBlocks = 0;
+			return;
 		}
 		
-		HybridListNode* he = head->next;
-		while (he != nullptr) {
-			if (he->next = tail) {
-				he->next = newTail;
-				break;
+		//if there is 2 Nodes
+		if (curr == tail) {
+			tail = nullptr;
+			head->next = tail;
+			numBlocks--;
+			return;
+		}
+
+		//if there is 3 or more Node
+		while (curr != nullptr) {
+			if (curr->next == tail) {
+				tail = nullptr;
+				tail = curr;
+				tail->next = nullptr;
+				numBlocks--;
+				return;
 			}
-			he = he->next;
+			curr = curr->next;
 		}
-		this->tail = newTail;
 	}
+
+	//if number of elements is 2,3,4
+	if (tail->size() - 2 >= 0) {
+		HybridListNode* newNode = new HybridListNode(blockSize);
+		//push n-1 items into new node
+		for (int i = 0; i < tail->size() - 1; i++) {
+			newNode->push_back(tail->at(i));
+		}
+		
+		HybridListNode* curr = head->next;
+		
+		//case when there is only 1 node
+		if (curr == nullptr) {
+			head = nullptr;
+			tail = nullptr;
+			head = newNode;
+			tail = newNode;
+			head->next = nullptr;
+			tail->next = nullptr;
+			return;
+		}
+		
+		//case when there is 2 nodes
+		if (curr == tail) {
+			tail = nullptr;
+			tail = newNode;
+			head->next = tail;
+			return;
+
+		}
+
+		//case when there is 3 or more nodes
+		while (curr != nullptr){
+			if (curr->next == tail) {
+				tail = nullptr;
+				tail = newNode;
+				curr->next = tail;
+				return;
+			}
+			curr = curr->next;
+		}	
+	}
+}
+
+
+void HybridList::erase(int index) {
+	
+
+	HybridListNode* tempPointer = nullptr;
+	HybridListNode* currPrev = head;
+	HybridListNode* curr = head->next;
+	
+	int currInd = 0;
+	bool found = false;
+
+	for (int i = 0; i < head->size(); i++) {
+		
+		tempPointer = nullptr;
+		tempPointer = new HybridListNode(blockSize);
+		
+		if (index == currInd) {
+			std::cout << "Removed Head :" << head->at(i);
+			found = true;
+		}
+		else {
+			tempPointer->push_back(head->at(i));
+		}
+		currInd++;
+		
+		if (found) {
+			tempPointer->next = head->next;
+			head = nullptr;
+			head = tempPointer;
+			return;
+		}
+
+	}
+
+	while (curr != nullptr) {
+		tempPointer = nullptr;
+		tempPointer = new HybridListNode(blockSize);
+		for (int i = 0; i < curr->size(); i++) {
+			if (index == currInd) {
+				std::cout << "Removed :" << curr->at(i);
+				found = true;
+			}
+			else {
+				tempPointer->push_back(curr->at(i));
+			}
+			currInd++;
+		}
+
+		if (found) {
+			currPrev->next = tempPointer;
+			tempPointer->next = curr->next;
+			curr = nullptr;
+			return;
+		}
+		currPrev = currPrev->next;
+		curr = curr->next;
+	}		
 }
 
 void HybridList::clear() {

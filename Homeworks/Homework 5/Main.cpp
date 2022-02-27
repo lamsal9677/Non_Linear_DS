@@ -220,13 +220,36 @@ int main() {
 	hListA.push_back(66.66);
 	hListA.push_back(77.77);
 	hListA.push_back(88.88);
-
-	hListA.pop_back();
-	
 	hListA.push_back(99.99);
-	hListA.push_back(111.111);
-	hListA.push_back(222.222);
-	hListA.push_back(333.333);
+	hListA.push_back(999.999);
+	hListA.push_back(999.999);
+	hListA.push_back(999.999);
+
+
+
+	
+	//hListA.pop_back();
+	
+	hListA.erase(0);
+	//hListA.erase(1);
+	hListA.erase(2);
+	//hListA.erase(3);
+	hListA.erase(4);
+	hListA.erase(4);
+	//hListA.erase(6);
+
+
+	//hListA.pop_back();
+	//hListA.pop_back();
+
+	//hListA.pop_back();
+
+	
+    //hListA.push_back(111.111);
+	//hListA.pop_back();
+
+	//hListA.push_back(222.222);
+	//hListA.push_back(333.333);
 
 	
 	HybridListNode* he;
