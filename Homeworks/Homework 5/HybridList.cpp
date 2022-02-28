@@ -112,6 +112,7 @@ void HybridList::pop_back() {
 			head = nullptr;
 			tail = nullptr;
 			numBlocks = 0;
+			numElements = 0;
 			return;
 		}
 		
@@ -120,6 +121,7 @@ void HybridList::pop_back() {
 			tail = nullptr;
 			head->next = tail;
 			numBlocks--;
+			numElements--;
 			return;
 		}
 
@@ -130,6 +132,7 @@ void HybridList::pop_back() {
 				tail = curr;
 				tail->next = nullptr;
 				numBlocks--;
+				numElements--;
 				return;
 			}
 			curr = curr->next;
@@ -154,6 +157,7 @@ void HybridList::pop_back() {
 			tail = newNode;
 			head->next = nullptr;
 			tail->next = nullptr;
+			numElements--;
 			return;
 		}
 		
@@ -162,6 +166,7 @@ void HybridList::pop_back() {
 			tail = nullptr;
 			tail = newNode;
 			head->next = tail;
+			numElements--;
 			return;
 
 		}
@@ -172,14 +177,13 @@ void HybridList::pop_back() {
 				tail = nullptr;
 				tail = newNode;
 				curr->next = tail;
+				numElements--;
 				return;
 			}
 			curr = curr->next;
 		}	
 	}
 }
-
-
 void HybridList::erase(int index) {
 	
 
@@ -195,6 +199,7 @@ void HybridList::erase(int index) {
 		if (index == currInd) {
 //			std::cout << "Removed Head :" << head->at(i);
 			found = true;
+			numElements--;
 		}
 		else {
 			tempPointer->push_back(head->at(i));
@@ -226,6 +231,7 @@ void HybridList::erase(int index) {
 			if (index == currInd) {
 //				std::cout << "Removed :" << curr->at(i);
 				found = true;
+				numElements--;
 			}
 			else {
 				tempPointer->push_back(curr->at(i));
@@ -250,6 +256,88 @@ void HybridList::erase(int index) {
 		currPrev = currPrev->next;
 		curr = curr->next;
 	}		
+}
+
+void HybridList::insert(int index, double value) {
+
+	//need to check for invalid index
+	if (index >= numElements || index < 0)
+		throw std::out_of_range("Invalid index " + std::to_string(index));
+	//need to do something for last index
+
+	HybridListNode* curr = head;
+	int currInd = 0;
+	int groupInd = 0;
+	while (curr != nullptr) {
+		for (int i = 0; i < curr->size(); i++) {
+			if (currInd == index) {
+				std::cout << "Found in"<<i<< std::endl;
+
+				if (curr->size() == blockSize) {
+					
+					HybridListNode* newNodeSplit1 = new HybridListNode(blockSize);
+					HybridListNode* newNodeSplit2 = new HybridListNode(blockSize);
+
+					for (int j = 0; j < blockSize / 2; j++)
+						newNodeSplit1->push_back(curr->at(j));
+
+					for (int j = blockSize / 2; j < blockSize; j++)
+						newNodeSplit2->push_back(curr->at(j));
+					
+					newNodeSplit1->resize(blockSize / 2);
+					newNodeSplit2->resize(blockSize - (blockSize / 2));
+
+
+					HybridListNode* currPrev = head;
+					while (currPrev->next != curr)
+						currPrev = currPrev->next;
+
+					if (curr == head) {
+						newNodeSplit1->next = newNodeSplit2;
+						newNodeSplit2->next = head->next;
+						head = newNodeSplit1;
+						numBlocks++;
+					}
+					else {
+						currPrev->next = newNodeSplit1;
+						newNodeSplit1->next = newNodeSplit2;
+						newNodeSplit2->next = curr->next;
+						curr = nullptr;
+						numElements++;
+						numBlocks++;
+					}
+
+					
+
+					//insertion into the list
+					
+					//for case of first half
+					if ((currInd-groupInd) < blockSize / 2)
+					{
+						newNodeSplit1->insert(currInd - groupInd, value);
+						return;
+					}
+					else if((currInd - groupInd) >= blockSize / 2) {
+						newNodeSplit2->insert(((currInd - groupInd)-(blockSize / 2)), value);
+						return;
+					}
+
+					//for case of second half
+
+				}
+				else {
+					curr->insert(i, value);
+					//add the index in the required position 
+					//move things from i to i+1 after insertion
+				}
+				//here, curr is the list that contains my required index
+			}
+			std::cout << "Group: " << groupInd << " and index: " << currInd << std::endl;
+			currInd++;
+		}
+		groupInd = currInd;
+		curr = curr->next;
+	}
 }
 
 void HybridList::clear() {
