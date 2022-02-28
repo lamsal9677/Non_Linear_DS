@@ -1,9 +1,2 @@
-﻿  BoundedArray.cpp
-  HybridList.cpp
-  Main.cpp
-D:\Programming\C++\Homework 5\Main.cpp(80,3): warning C4456: declaration of 'j' hides previous local declaration
-D:\Programming\C++\Homework 5\Main.cpp(68,6): message : see declaration of 'j'
-D:\Programming\C++\Homework 5\Main.cpp(68,6): warning C4189: 'j': local variable is initialized but not referenced
-D:\Programming\C++\Homework 5\Main.cpp(69,6): warning C4189: 'currentIND': local variable is initialized but not referenced
-  Generating Code...
+﻿  HybridList.cpp
   Homework 5.vcxproj -> D:\Programming\C++\Homework 5\x64\Debug\Homework 5.exe

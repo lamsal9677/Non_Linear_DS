@@ -289,8 +289,12 @@ void HybridList::insert(int index, double value) {
 
 
 					HybridListNode* currPrev = head;
-					while (currPrev->next != curr)
+					while (currPrev != nullptr) {
+						if (currPrev->next == curr) {
+							break;
+						}
 						currPrev = currPrev->next;
+					}
 
 					if (curr == head) {
 						newNodeSplit1->next = newNodeSplit2;
