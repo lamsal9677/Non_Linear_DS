@@ -189,138 +189,95 @@ void NodeArrayImplem() {
 
 
 int main() {
-	//NodeArrayImplem();
-	/*
-	BoundedArray arr(0,4);
-	arr.push_back(100);
-	arr.push_back(200);
-	arr.push_back(300);
-	arr.push_back(400);
-
-	HybridListNode nodeA(4);
-	nodeA.push_back(0);
-	nodeA.push_back(0);
-	nodeA.push_back(0);
-	nodeA.push_back(0);
-
-	HybridListNode nodeB(4);
-	nodeB.push_back(1);
-	nodeB.push_back(1);
-	nodeB.push_back(1);
-	nodeB.push_back(1);
-	*/
-
 
 	HybridList hListA(4);
 	hListA.push_back(11.11);
-	//hListA.push_back(22.22);
-	//hListA.push_back(33.33);
-	//hListA.push_back(44.44);
-	//hListA.push_back(55.55);
-	//hListA.push_back(66.66);
-	//hListA.push_back(77.77);
+	hListA.push_back(22.22);
+	hListA.push_back(33.33);
+	hListA.push_back(44.44);
+	hListA.push_back(55.55);
+//	hListA.push_back(66.66);
+//	hListA.push_back(77.77);
 	//hListA.push_back(88.88);
 	//hListA.push_back(99.99);
 	//hListA.push_back(999.999);
 	//hListA.push_back(999.999);
 	//hListA.push_back(999.999);
-
-
-
-	
 	//hListA.pop_back();
-	
-//	hListA.erase(0);
-//	hListA.erase(0);
-//	hListA.erase(0);
+	//hListA.pop_back();
+	//hListA.pop_back();
+	//hListA.pop_back();
+	//hListA.pop_back();
+	//hListA.pop_back();
 
+	hListA.pop_back();
+	hListA.pop_back();
+	hListA.pop_back();
+	hListA.pop_back();
+	hListA.pop_back();
 
-//	hListA.erase(3);
+	//hListA.erase(0);
+//	hListA.erase(0);
+//	hListA.erase(0);
+//	hListA.erase(0);
+//	hListA.erase(0);
+//	hListA.erase(0);
 //	hListA.erase(3);
 //	hListA.erase(3);
 
 	//hListA.erase(3);
 
-	//hListA.insert(0, 43.21);//can be inserted in 0 but cant be inserted in 1
-	//hListA.insert(0, 43.21);//can be inserted in 0 but cant be inserted in 1
+	//hListA.insert(3, 43.21);//can be inserted in 0 but cant be inserted in 1
+	//hListA.insert(3, 43.21);//can be inserted in 0 but cant be inserted in 1
 	//hListA.insert(0, 43.21);//can be inserted in 0 but cant be inserted in 1
 	//hListA.insert(0, 43.21);//can be inserted in 0 but cant be inserted in 1
 	//hListA.insert(0, 43.21);//can be inserted in 0 but cant be inserted in 1
 	//hListA.insert(0, 43.21);//can be inserted in 0 but cant be inserted in 1
 
-	hListA.insert(0,43.11);//can be inserted in 0 but cant be inserted in 1
+	//hListA.insert(0,43.11);//can be inserted in 0 but cant be inserted in 1
 
-	hListA.push_back(43.21);//can be inserted in 0 but cant be inserted in 1
-	hListA.insert(1, 43.21);//can be inserted in 0 but cant be inserted in 1
-	hListA.insert(1, 43.21);//can be inserted in 0 but cant be inserted in 1
-	hListA.insert(1, 43.21);//can be inserted in 0 but cant be inserted in 1
-	hListA.insert(1, 43.21);//can be inserted in 0 but cant be inserted in 1
-	hListA.insert(1, 43.21);//can be inserted in 0 but cant be inserted in 1
+	//hListA.push_back(43.21);//can be inserted in 0 but cant be inserted in 1
+	//hListA.insert(0, 43.21);//can be inserted in 0 but cant be inserted in 1
+	//hListA.insert(0, 43.21);//can be inserted in 0 but cant be inserted in 1
+	//hListA.insert(1, 43.21);//can be inserted in 0 but cant be inserted in 1
+	//hListA.insert(1, 43.21);//can be inserted in 0 but cant be inserted in 1
+	//hListA.insert(1, 43.21);//can be inserted in 0 but cant be inserted in 1
+	//hListA.insert(1, 43.21);//can be inserted in 0 but cant be inserted in 1
 
 
 	//hListA.insert(8, 43.21);
 	//hListA.insert(8, 42.21);
 	//hListA.insert(8, 41.21);
 	//hListA.insert(8, 40.21);
-
-
-	
-
 	//hListA.erase(1);
 	//hListA.erase(2);
 	//hListA.erase(3);
 	//hListA.erase(4);
 	//hListA.erase(4);
 	//hListA.erase(6);
-
-
 	//hListA.pop_back();
 	//hListA.pop_back();
-
 	//hListA.pop_back();
-
-	
     //hListA.push_back(111.111);
 	//hListA.pop_back();
-
 	//hListA.push_back(222.222);
 	//hListA.push_back(333.333);
 
 	
+	
+	
 	HybridListNode* he;
 	he = hListA.front();
-
 	int rPointer = 0;
-
 	while (he != nullptr) {
 		std::cout << "Found an LL" << std::endl;
 		for (int i = 0; i < he->size(); i++) {
 		std::cout << he->at(i);
 		std::cout << " ";
-		//std::cout << "Index: " << rPointer << " ";
 		rPointer++;
 		}	
 		std::cout<<he->size() << std::endl;
 		he = he->next;
 	}
-	
-
-	//pop back
-	/*
-	HybridListNode* he2;
-	double val = 0.0;
-	he2 = hListA.back();
-	for (int i = 0; i< he2->size(); i++) {
-		val = he2->at(i);
-	}
-	std::cout << val;
-	*/
-
-	// Delete element at specified index. Throw out of range exception if index is
-	// invalid.
-	//erase
-
-
-
 	return 0;
 }

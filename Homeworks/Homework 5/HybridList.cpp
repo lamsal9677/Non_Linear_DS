@@ -96,7 +96,7 @@ void HybridList::push_back(double value) {
 }
 
 void HybridList::pop_back() {
-	
+
 	//if no element in the list then throw an exception
 	if (head == nullptr) {
 		throw std::out_of_range("List has no elements");
@@ -115,11 +115,12 @@ void HybridList::pop_back() {
 			numElements = 0;
 			return;
 		}
-		
+
 		//if there is 2 Nodes
 		if (curr == tail) {
-			tail = nullptr;
-			head->next = tail;
+			tail = head;
+			head->next = nullptr;
+			tail->next = nullptr;
 			numBlocks--;
 			numElements--;
 			return;
@@ -146,9 +147,9 @@ void HybridList::pop_back() {
 		for (int i = 0; i < tail->size() - 1; i++) {
 			newNode->push_back(tail->at(i));
 		}
-		
+
 		HybridListNode* curr = head->next;
-		
+
 		//case when there is only 1 node
 		if (curr == nullptr) {
 			head = nullptr;
@@ -160,7 +161,7 @@ void HybridList::pop_back() {
 			numElements--;
 			return;
 		}
-		
+
 		//case when there is 2 nodes
 		if (curr == tail) {
 			tail = nullptr;
@@ -172,7 +173,7 @@ void HybridList::pop_back() {
 		}
 
 		//case when there is 3 or more nodes
-		while (curr != nullptr){
+		while (curr != nullptr) {
 			if (curr->next == tail) {
 				tail = nullptr;
 				tail = newNode;
@@ -181,9 +182,10 @@ void HybridList::pop_back() {
 				return;
 			}
 			curr = curr->next;
-		}	
+		}
 	}
 }
+
 void HybridList::erase(int index) {
 	
 
@@ -257,7 +259,6 @@ void HybridList::erase(int index) {
 		curr = curr->next;
 	}		
 }
-
 void HybridList::insert(int index, double value) {
 
 	//need to check for invalid index
