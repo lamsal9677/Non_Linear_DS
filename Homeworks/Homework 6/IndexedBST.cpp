@@ -66,16 +66,27 @@ void IndexedBST::insert(Node* node) {
     //if the root node is null then insert the node into the root node
     if (root == nullptr) {
         root = node;
+        //root->leftSize = 0; Just a refrence comment
         return;
     }
 
-    //assigning currNode = root node to prevent changing the root node
     Node* currNode = root;
-    //loop until a null pointer is not found
     while (currNode != nullptr) {
         if (node->key <= currNode->key) {
             if (currNode->left == nullptr) {
                 currNode->left = node;
+                currNode->left->parent = currNode;
+                currNode = currNode->left;
+                //traverse up and see if it is left node and if it is then leftsize  += 1
+                
+                //from this point go up incrementing the left size
+                while (currNode != root) {
+                    if (currNode == currNode->parent->left) {
+                        currNode->parent->leftSize += 1;
+                    }
+                    currNode = currNode->parent;
+                }
+
                 return;
             }
             else {
@@ -85,6 +96,17 @@ void IndexedBST::insert(Node* node) {
         else {
             if (currNode->right == nullptr) {
                 currNode->right = node;
+                currNode->right->parent = currNode;
+                currNode = currNode->right;
+               //traverse up and see if it is left node and if it is then leftsize  += 1
+               
+                while (currNode != root) {
+                    if (currNode == currNode->parent->left) {
+                        currNode->parent->leftSize += 1;
+                    }
+                    currNode = currNode->parent;
+                }
+
                 return;
             }
             else {
@@ -95,5 +117,43 @@ void IndexedBST::insert(Node* node) {
  }
 
 bool IndexedBST::remove(double key) {
+
+    if (key == root->key) {
+        //..find the successor and replace with the successor
+    }
+
+    Node* currNode = root;
+
+    while (currNode->key != key || currNode == nullptr) {
+    
+        if (key <= currNode->key) {
+            currNode = currNode->left;
+        }
+        else {
+            currNode = currNode->right;
+        }
+    }
+    
+    if (currNode == nullptr) {
+        std::cout << "Not Found";
+        return false;
+    }
+
+
+    if (currNode->left == nullptr && currNode->right == nullptr) {
+        //currNode = nullptr;
+    }
+    else if (currNode->left == nullptr) {
+    
+    }
+    else if (currNode->right == nullptr) {
+
+    }
+    else {
+    
+    }
+
+
+
     return false;
 }
