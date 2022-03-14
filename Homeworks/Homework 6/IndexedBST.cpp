@@ -118,42 +118,94 @@ void IndexedBST::insert(Node* node) {
 
 bool IndexedBST::remove(double key) {
 
+    if (root == nullptr) {
+        return false;
+    }
+
     if (key == root->key) {
         //..find the successor and replace with the successor
+        return false;
     }
 
     Node* currNode = root;
+    while (currNode != nullptr) {
+        if (key == currNode->key){
+            
+            //leaf node case   --- testing done
+            if (currNode->left == nullptr && currNode->right == nullptr) {
 
-    while (currNode->key != key || currNode == nullptr) {
-    
-        if (key <= currNode->key) {
+                if (currNode->parent->left == currNode) {
+                    currNode->parent->left = nullptr;
+                    currNode = nullptr;
+                }
+
+
+                else if (currNode->parent->right == currNode) {
+                    currNode->parent->right = nullptr;
+                    currNode = nullptr;
+                }
+            }
+            
+            //node having only left node  -- tested
+            else if (currNode->right == nullptr) {
+
+                if (currNode->parent->left == currNode) {
+                    currNode->parent->left = currNode->left;
+                    currNode = nullptr;
+                    break;
+                }
+                else if (currNode->parent->right == currNode) {
+                    currNode->parent->right = currNode->left;
+                    currNode = nullptr;
+                    break;
+                }
+
+            }
+            
+            //node having only right node   -- tested 
+            else if (currNode->left == nullptr) {
+
+                if (currNode->parent->left == currNode) {
+                    currNode->parent->left = currNode->right;
+                    currNode = nullptr;
+                    break;
+                }
+                else if (currNode->parent->right == currNode) {
+                    currNode->parent->right = currNode->right;
+                    currNode = nullptr;
+                    break;
+                }
+
+            }
+            
+            //case of a node where there is both left node and right node -- ytested
+            else {
+                
+                Node* successor = currNode;
+                successor = successor->right;
+                while (successor->left != nullptr) {
+                    successor = successor->left;
+                }
+                
+                //at this point we have the successor
+                double successorKey = successor->key;
+                IndexedBST::remove(successorKey);
+                currNode->key = successorKey;
+            }
+        }
+        //move left if the key <= current key
+        else if (key <= currNode->key){
             currNode = currNode->left;
         }
+        //move right if the key > current key
         else {
             currNode = currNode->right;
         }
     }
-    
-    if (currNode == nullptr) {
-        std::cout << "Not Found";
-        return false;
-    }
-
-
-    if (currNode->left == nullptr && currNode->right == nullptr) {
-        //currNode = nullptr;
-    }
-    else if (currNode->left == nullptr) {
-    
-    }
-    else if (currNode->right == nullptr) {
-
-    }
-    else {
-    
-    }
-
-
-
     return false;
+
+
+    
+
+
 }
