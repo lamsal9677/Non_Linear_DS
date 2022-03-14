@@ -1,4 +1,5 @@
 #include "IndexedBST.h"
+#include <iostream>
 
 IndexedBST::~IndexedBST() {
     deleteTree(root);
@@ -58,4 +59,41 @@ Node* IndexedBST::at(int index) {
     }
 
     return nullptr;
+}
+
+void IndexedBST::insert(Node* node) {
+    
+    //if the root node is null then insert the node into the root node
+    if (root == nullptr) {
+        root = node;
+        return;
+    }
+
+    //assigning currNode = root node to prevent changing the root node
+    Node* currNode = root;
+    //loop until a null pointer is not found
+    while (currNode != nullptr) {
+        if (node->key <= currNode->key) {
+            if (currNode->left == nullptr) {
+                currNode->left = node;
+                return;
+            }
+            else {
+                currNode = currNode->left;
+            }
+        }
+        else {
+            if (currNode->right == nullptr) {
+                currNode->right = node;
+                return;
+            }
+            else {
+                currNode = currNode->right;
+            }
+        }
+    }
+ }
+
+bool IndexedBST::remove(double key) {
+    return false;
 }
