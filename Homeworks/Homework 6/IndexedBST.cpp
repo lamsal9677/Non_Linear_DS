@@ -117,6 +117,8 @@ void IndexedBST::insert(Node* node) {
  }
 
 bool IndexedBST::remove(double key) {
+;
+    Node* test = root;
 
     if (root == nullptr) {
         return false;
@@ -130,34 +132,78 @@ bool IndexedBST::remove(double key) {
     Node* currNode = root;
     while (currNode != nullptr) {
         if (key == currNode->key){
-            
+            Node* traverseUp = currNode;
             //leaf node case   --- testing done
             if (currNode->left == nullptr && currNode->right == nullptr) {
 
                 if (currNode->parent->left == currNode) {
+                    
+                    //logic to reduce the leftSize
+                    while (traverseUp != root) {
+                        if (traverseUp->parent->left == traverseUp) {
+                            if (traverseUp->parent->leftSize > 0)
+                                traverseUp->parent->leftSize -= 1;
+                        }
+                        traverseUp = traverseUp->parent;
+                    }
+
                     currNode->parent->left = nullptr;
                     currNode = nullptr;
+                    return true;
                 }
 
-
                 else if (currNode->parent->right == currNode) {
+                   
+                    //logic to reduce the leftSize
+                    while (traverseUp != root) {
+                        if (traverseUp->parent->left == traverseUp) {
+                            if (traverseUp->parent->leftSize > 0)
+                                traverseUp->parent->leftSize -= 1;
+                        }
+                        traverseUp = traverseUp->parent;
+                    }
+                    
                     currNode->parent->right = nullptr;
                     currNode = nullptr;
+                    return true;
                 }
             }
             
+
             //node having only left node  -- tested
             else if (currNode->right == nullptr) {
 
                 if (currNode->parent->left == currNode) {
+                    
+                    //logic to reduce the leftSize
+                    while (traverseUp != root) {
+                        if (traverseUp->parent->left == traverseUp) {
+                            if (traverseUp->parent->leftSize > 0)
+                                traverseUp->parent->leftSize -= 1;
+                        }
+                        traverseUp = traverseUp->parent;
+                    }
+                    
                     currNode->parent->left = currNode->left;
                     currNode = nullptr;
-                    break;
+                    return true;
                 }
                 else if (currNode->parent->right == currNode) {
+                   
+
+                    //logic to reduce the leftSize
+                    while (traverseUp != root) {
+                        if (traverseUp->parent->left == traverseUp) {
+                            if (traverseUp->parent->leftSize > 0)
+                                traverseUp->parent->leftSize -= 1;
+                        }
+                        traverseUp = traverseUp->parent;
+                    }
+
+                    
                     currNode->parent->right = currNode->left;
                     currNode = nullptr;
-                    break;
+                    return true;
                 }
 
             }
@@ -166,14 +212,35 @@ bool IndexedBST::remove(double key) {
             else if (currNode->left == nullptr) {
 
                 if (currNode->parent->left == currNode) {
+                    
+                    //logic to reduce the leftSize
+                    while (traverseUp != root) {
+                        if (traverseUp->parent->left == traverseUp) {
+                            if (traverseUp->parent->leftSize > 0)
+                                traverseUp->parent->leftSize -= 1;
+                        }
+                        traverseUp = traverseUp->parent;
+                    }
                     currNode->parent->left = currNode->right;
                     currNode = nullptr;
-                    break;
+                    return true;
                 }
                 else if (currNode->parent->right == currNode) {
+                    
+
+                    //logic to reduce the leftSize
+                    while (traverseUp != root) {
+                        if (traverseUp->parent->left == traverseUp) {
+                            if (traverseUp->parent->leftSize > 0)
+                                traverseUp->parent->leftSize -= 1;
+                        }
+                        traverseUp = traverseUp->parent;
+                    }
+
+                    
                     currNode->parent->right = currNode->right;
                     currNode = nullptr;
-                    break;
+                    return true;
                 }
 
             }
@@ -184,13 +251,37 @@ bool IndexedBST::remove(double key) {
                 Node* successor = currNode;
                 successor = successor->right;
                 while (successor->left != nullptr) {
+                    
+                    //if (successor->leftSize > 0) {
+                    //    successor->leftSize -= 1;
+                    //}
+                     
+                    
+                    //reduce left size by one in every iteration
+                    //we dont need to reduce by 1 since we are removing from right side left most element
                     successor = successor->left;
                 }
                 
+
+                //logic to reduce the leftSize by traversing up
+               
+                
+                /*
+                while (traverseUp != root) {
+                    if (traverseUp->parent->left = traverseUp) {
+                        if (traverseUp->parent->leftSize > 0)
+                            traverseUp->parent->leftSize -= 1;
+                    }
+                    traverseUp = traverseUp->parent;
+                }
+                */
+
+
                 //at this point we have the successor
                 double successorKey = successor->key;
                 IndexedBST::remove(successorKey);
                 currNode->key = successorKey;
+                return true;
             }
         }
         //move left if the key <= current key
@@ -203,9 +294,4 @@ bool IndexedBST::remove(double key) {
         }
     }
     return false;
-
-
-    
-
-
 }

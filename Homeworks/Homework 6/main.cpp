@@ -36,7 +36,7 @@ int main()
     testSearch(tree, key);
     testAt(tree, index);
 
-    delete tree;
+   // delete tree;
 
     return 0;
 }
