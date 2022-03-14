@@ -11,7 +11,10 @@ void testAt(IndexedBST* tree, int index);
 int main()
 {
     // Test insert
-    double numbers[] = { 9, 4, 11, 2, 6, 15, 1, 3, 5, 8 };
+   double numbers[] = { 9, 4, 11, 2, 6, 15, 1, 3, 5, 8 };
+   //double numbers[] = { 9, 4, 15};
+
+    
     IndexedBST* tree = new IndexedBST();
     for (double number : numbers) {
         tree->insert(new Node(number));
@@ -36,7 +39,7 @@ int main()
     testSearch(tree, key);
     testAt(tree, index);
 
-   // delete tree;
+    delete tree;
 
     return 0;
 }
