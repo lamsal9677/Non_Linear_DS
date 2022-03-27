@@ -16,6 +16,13 @@ void printVector(const std::vector<double>& numbers);
 
 int main()
 {
+	int aSum = 0;
+	int bSum = 0;
+	int cSum = 0;
+	int dSum = 0;
+	int eSum = 0;
+	int fSum = 0;
+
 	for (int i = 100; i <= 100000; i = i * 10) {
 		for (int j = 1; j <= 10; j++) {
 			std::vector<double> vec = generateRandomVector(i);
@@ -33,7 +40,7 @@ int main()
 					auto stopRBT = high_resolution_clock::now();
 					auto durationRBT = duration_cast<microseconds>(stopRBT - startRBT);
 					//std::cout << "RBT Insert with size : " << i << " took us : " << durationRBT.count() << " Microseconds" << std::endl;
-					std::cout << durationRBT.count() << std::endl;
+					//std::cout << durationRBT.count() << std::endl;
 				}
 
 				//AVL Unsorted
@@ -43,12 +50,13 @@ int main()
 					auto startAVL = high_resolution_clock::now();
 					b.insert(bRoot);
 					for (int j = 1; j < vec.size(); j++) {
-						b.insert(new Node(1));
+						b.insert(new Node(j));
 					}
 					auto stopAVL = high_resolution_clock::now();
 					auto durationAVL = duration_cast<microseconds>(stopAVL - startAVL);
 					//std::cout << "AVL Insert with size : " << i << " took us : " << durationAVL.count() << " Microseconds" << std::endl;
-					std::cout << durationAVL.count() << std::endl;
+					//std::cout << durationAVL.count() << std::endl;
+					bSum = bSum + b.get_root()->height;
 				}
 			}
 			
@@ -67,7 +75,7 @@ int main()
 					auto stopRBT = high_resolution_clock::now();
 					auto durationRBT = duration_cast<microseconds>(stopRBT - startRBT);
 					//std::cout << "Half Sorted RBT Insert with size : " << i << " took us : " << durationRBT.count() << " Microseconds" << std::endl;
-					std::cout << durationRBT.count() << std::endl;
+					//std::cout << durationRBT.count() << std::endl;
 				}
 
 				//AVL Half sorted
@@ -77,12 +85,13 @@ int main()
 					auto startAVL = high_resolution_clock::now();
 					d.insert(dRoot);
 					for (int j = 1; j < vec.size(); j++) {
-						d.insert(new Node(1));
+						d.insert(new Node(j));
 					}
 					auto stopAVL = high_resolution_clock::now();
 					auto durationAVL = duration_cast<microseconds>(stopAVL - startAVL);
 					//std::cout << "Half AVL Insert with size : " << i << " took us : " << durationAVL.count() << " Microseconds" << std::endl;
-					std::cout << durationAVL.count() << std::endl;
+					//std::cout << durationAVL.count() << std::endl;
+					dSum = dSum + d.get_root()->height;
 				}
 			}
 
@@ -101,7 +110,7 @@ int main()
 					auto stopRBT = high_resolution_clock::now();
 					auto durationRBT = duration_cast<microseconds>(stopRBT - startRBT);
 					//std::cout << "Fully Sorted RBT Insert with size : " << i << " took us : " << durationRBT.count() << " Microseconds" << std::endl;
-					std::cout << durationRBT.count() <<std::endl;
+					//std::cout << durationRBT.count() <<std::endl;
 				}
 
 				//AVL Full sorted
@@ -111,16 +120,29 @@ int main()
 					auto startAVL = high_resolution_clock::now();
 					f.insert(fRoot);
 					for (int j = 1; j < vec.size(); j++) {
-						f.insert(new Node(1));
+						f.insert(new Node(j));
 					}
 					auto stopAVL = high_resolution_clock::now();
 					auto durationAVL = duration_cast<microseconds>(stopAVL - startAVL);
 					//std::cout << "Fully Sorted AVL Insert with size : " << i << " took us : " << durationAVL.count() << " Microseconds" << std::endl;
-					std::cout << durationAVL.count() << std::endl;
+					//std::cout << durationAVL.count() << std::endl;
+					fSum = fSum+ f.get_root()->height;
 				}
 			}
 
 		}
+		std::cout << aSum / 10 << std::endl;
+		std::cout << bSum / 10 << std::endl;
+		std::cout << cSum / 10 << std::endl;
+		std::cout << dSum / 10 << std::endl;
+		std::cout << eSum / 10 << std::endl;
+		std::cout << fSum / 10 << std::endl;
+		aSum = 0;
+		bSum = 0;
+		cSum = 0;
+		dSum = 0;
+		eSum = 0;
+		fSum = 0;
 	}
 }
 
