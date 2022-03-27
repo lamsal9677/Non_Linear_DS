@@ -112,19 +112,19 @@ void RedBlackTree::refine(RBTNode* node) {
             if (node->parent->left == node && nodeParent->parent->right == nodeParent) {
                 //rotate node's parent in the right direction
                 rightRotation(nodeParent);
-                std::cout << "Parent is rotated right";
+                //std::cout << "Parent is rotated right";
             }
 
             else if (node->parent->right == node && nodeParent->parent->left == nodeParent) {
                 //rotate node's parent in the left direction
                 leftRotation(nodeParent);
-                std::cout << "Parent is rotated left";
+               // std::cout << "Parent is rotated left";
             }
 
             //Case 3 When the uncle is black and line
             else if (node->parent->left == node && nodeParent->parent->left == nodeParent) {
                 //rotate node's grandparent in the right direction
-                std::cout << "grandparent is rotated right";
+                //std::cout << "grandparent is rotated right";
                 rightRotation(grandparent);
                 nodeParent->red = !nodeParent->red;//recolor the parent
                 grandparent->red = !grandparent->red;//recolor the grandparent
@@ -132,7 +132,7 @@ void RedBlackTree::refine(RBTNode* node) {
 
             else if (node->parent->right == node && nodeParent->parent->right == nodeParent) {
                 //rotate node's grandparent in the left direction
-                std::cout << "grandparent is rotated left";
+                //std::cout << "grandparent is rotated left";
                 leftRotation(grandparent);
                 nodeParent->red = !nodeParent->red;//recolor the parent
                 grandparent->red = !grandparent->red;//recolor the grandparent

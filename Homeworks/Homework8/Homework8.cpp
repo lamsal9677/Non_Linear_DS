@@ -3,45 +3,138 @@
 
 #include <iostream>
 #include "RedBlackTree.h"
+#include "AVLTree.h"
+#include <vector>
+#include <chrono>
+#include <algorithm>
+
+using namespace std::chrono;
+
+std::vector<double> generateRandomVector(int listSize);
+
+void printVector(const std::vector<double>& numbers);
 
 int main()
 {
-    /* Test red-black tree inserts */
-    RedBlackTree a;
-/*
-    RBTNode* aRoot = new RBTNode(22);
-    a.insert(aRoot);
-    a.insert(new RBTNode(11));
-    a.insert(new RBTNode(33));
-    a.insert(new RBTNode(55));
-    a.insert(new RBTNode(44));
-*/
+	for (int i = 100; i <= 100000; i = i * 10) {
+		for (int j = 1; j <= 10; j++) {
+			std::vector<double> vec = generateRandomVector(i);
+			
+			{
+				//RBT Unsorted
+				{
+					RedBlackTree a;
+					RBTNode* aRoot = new RBTNode(vec.front());
+					auto startRBT = high_resolution_clock::now();
+					a.insert(aRoot);
+					for (int j = 1; j < vec.size(); j++) {
+						a.insert(new RBTNode(vec.at(j)));
+					}
+					auto stopRBT = high_resolution_clock::now();
+					auto durationRBT = duration_cast<microseconds>(stopRBT - startRBT);
+					//std::cout << "RBT Insert with size : " << i << " took us : " << durationRBT.count() << " Microseconds" << std::endl;
+					std::cout << durationRBT.count() << std::endl;
+				}
 
-    RBTNode* aRoot = new RBTNode(8);
-    a.insert(aRoot);
-    a.insert(new RBTNode(5));
-    a.insert(new RBTNode(15));
-    a.insert(new RBTNode(12));
-    a.insert(new RBTNode(19));
-    a.insert(new RBTNode(9));
-    a.insert(new RBTNode(13));
-    a.insert(new RBTNode(23));
+				//AVL Unsorted
+				{
+					AVLTree b;
+					Node* bRoot = new Node(vec.front());
+					auto startAVL = high_resolution_clock::now();
+					b.insert(bRoot);
+					for (int j = 1; j < vec.size(); j++) {
+						b.insert(new Node(1));
+					}
+					auto stopAVL = high_resolution_clock::now();
+					auto durationAVL = duration_cast<microseconds>(stopAVL - startAVL);
+					//std::cout << "AVL Insert with size : " << i << " took us : " << durationAVL.count() << " Microseconds" << std::endl;
+					std::cout << durationAVL.count() << std::endl;
+				}
+			}
+			
+			std::sort(vec.begin() + i/4, vec.end() - i/4);
 
-    std::cout << "DONEE" << std::endl;
-    std::cout << "DONEE" <<std::endl;
-    a.insert(new RBTNode(10));
+			{
+				//RBT Half sorted
+				{
+					RedBlackTree c;
+					RBTNode* cRoot = new RBTNode(vec.front());
+					auto startRBT = high_resolution_clock::now();
+					c.insert(cRoot);
+					for (int j = 1; j < vec.size(); j++) {
+						c.insert(new RBTNode(vec.at(j)));
+					}
+					auto stopRBT = high_resolution_clock::now();
+					auto durationRBT = duration_cast<microseconds>(stopRBT - startRBT);
+					//std::cout << "Half Sorted RBT Insert with size : " << i << " took us : " << durationRBT.count() << " Microseconds" << std::endl;
+					std::cout << durationRBT.count() << std::endl;
+				}
 
+				//AVL Half sorted
+				{
+					AVLTree d;
+					Node* dRoot = new Node(vec.front());
+					auto startAVL = high_resolution_clock::now();
+					d.insert(dRoot);
+					for (int j = 1; j < vec.size(); j++) {
+						d.insert(new Node(1));
+					}
+					auto stopAVL = high_resolution_clock::now();
+					auto durationAVL = duration_cast<microseconds>(stopAVL - startAVL);
+					//std::cout << "Half AVL Insert with size : " << i << " took us : " << durationAVL.count() << " Microseconds" << std::endl;
+					std::cout << durationAVL.count() << std::endl;
+				}
+			}
 
+			std::sort(vec.begin(), vec.end());
 
+			{
+				//RBT Full sorted
+				{
+					RedBlackTree e;
+					RBTNode* eRoot = new RBTNode(vec.front());
+					auto startRBT = high_resolution_clock::now();
+					e.insert(eRoot);
+					for (int j = 1; j < vec.size(); j++) {
+						e.insert(new RBTNode(vec.at(j)));
+					}
+					auto stopRBT = high_resolution_clock::now();
+					auto durationRBT = duration_cast<microseconds>(stopRBT - startRBT);
+					//std::cout << "Fully Sorted RBT Insert with size : " << i << " took us : " << durationRBT.count() << " Microseconds" << std::endl;
+					std::cout << durationRBT.count() <<std::endl;
+				}
 
+				//AVL Full sorted
+				{
+					AVLTree f;
+					Node* fRoot = new Node(vec.front());
+					auto startAVL = high_resolution_clock::now();
+					f.insert(fRoot);
+					for (int j = 1; j < vec.size(); j++) {
+						f.insert(new Node(1));
+					}
+					auto stopAVL = high_resolution_clock::now();
+					auto durationAVL = duration_cast<microseconds>(stopAVL - startAVL);
+					//std::cout << "Fully Sorted AVL Insert with size : " << i << " took us : " << durationAVL.count() << " Microseconds" << std::endl;
+					std::cout << durationAVL.count() << std::endl;
+				}
+			}
 
+		}
+	}
+}
 
-    //a.insert(new RBTNode(7));
-    //std::cout << aRoot->key << std::endl;
-    //std::cout << aRoot->left->key << " " << aRoot->right->key << std::endl;
-    //std::cout << aRoot->right->left->key << " " << aRoot->right->right->key
-    //    << std::endl;
+std::vector<double> generateRandomVector(int listSize) {
+	std::vector<double> randomList(listSize);
 
-
-
+	for (int i = 0; i < listSize; i++) {
+		// Divide by RAND_MAX to get back a random double between 0 and 1
+		randomList.at(i) = (double)rand() / RAND_MAX;
+	}
+	return randomList;
+}
+void printVector(const std::vector<double>& numbers) {
+	for (unsigned int j = 0; j < numbers.size(); j++)
+		std::cout << numbers.at(j) << " ";
+	std::cout << std::endl;
 }
