@@ -5,8 +5,7 @@
 class RBTNode {
 public:
     double key;
-    // Whether the node is red (false denotes black)
-    bool red = true;
+    bool red = true;// Whether the node is red (false denotes black)
     RBTNode* left = nullptr;
     RBTNode* right = nullptr;
     RBTNode* parent = nullptr;
@@ -25,6 +24,11 @@ public:
 
     // Insert a new element and rebalance the tree
     void insert(RBTNode* node);
+    void insertWithoutShift(RBTNode* node);
+
+    void leftRotation(RBTNode* node);
+    void rightRotation(RBTNode* node);
+
 
 private:
     RBTNode* root = nullptr;
