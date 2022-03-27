@@ -24,7 +24,7 @@ public:
 
     // Insert a new element and rebalance the tree
     void insert(RBTNode* node);
-    void insertWithoutShift(RBTNode* node);
+    void refine(RBTNode* node);
 
     void leftRotation(RBTNode* node);
     void rightRotation(RBTNode* node);

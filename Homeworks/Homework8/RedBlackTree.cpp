@@ -20,7 +20,7 @@ void RedBlackTree::deleteTree(RBTNode* node) {
     delete node;
 }
 
-void RedBlackTree::insertWithoutShift(RBTNode* node) {
+void RedBlackTree::insert(RBTNode* node) {
     if (root == nullptr) {
         root = node;
         node->parent = nullptr;
@@ -48,18 +48,41 @@ void RedBlackTree::insertWithoutShift(RBTNode* node) {
                 cur = cur->right;
         }
     }
+    /*
+    refine(node);
+    
+    while (node!=nullptr) {
+        if (node->left != nullptr && (node->left->red && node->red)) {
+            refine(node);
+        }
+
+        if (node->right != nullptr && (node->right->red && node->red)) {
+            refine(node);
+        }
+        node = node->parent;
+    }
+    */
+    if (node != nullptr) {
+        if (node==root){
+            refine(node);
+        }
+        while (node->parent != nullptr) {
+            if (node->parent->red && node->red) {
+                refine(node);
+            }
+            node = node->parent;
+        }
+    }
+
 }
 
-void RedBlackTree::insert(RBTNode* node) {
-
-    insertWithoutShift(node);
+void RedBlackTree::refine(RBTNode* node) {
 
     //Case 0 Change root node to black
     if (node == root) {
         node->red = false;
         return;
     }
-
 
     RBTNode* nodeParent = node->parent;
     RBTNode* grandparent = nodeParent->parent;
@@ -87,6 +110,7 @@ void RedBlackTree::insert(RBTNode* node) {
             //Case 2 When the uncle is black and triangle
             if (node->parent->left == node && nodeParent->parent->right == nodeParent) {
                 //rotate node's parent in the right direction
+                rightRotation(nodeParent);
                 std::cout << "Parent is rotated right";
             }
 
@@ -115,6 +139,7 @@ void RedBlackTree::insert(RBTNode* node) {
             
         }
     }
+
     //Case 0 Change root node to black
     root->red = false;
 }
@@ -140,7 +165,6 @@ void RedBlackTree::leftRotation(RBTNode* node) {
     temp->left = node;
     node->parent = temp;
 }
-
 void RedBlackTree::rightRotation(RBTNode* node) {
     
     RBTNode* temp = node->left;

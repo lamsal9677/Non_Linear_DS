@@ -17,10 +17,19 @@ int main()
     a.insert(new RBTNode(44));
 */
 
-    RBTNode* aRoot = new RBTNode(10);
+    RBTNode* aRoot = new RBTNode(8);
     a.insert(aRoot);
     a.insert(new RBTNode(5));
-    a.insert(new RBTNode(8));
+    a.insert(new RBTNode(15));
+    a.insert(new RBTNode(12));
+    a.insert(new RBTNode(19));
+    a.insert(new RBTNode(9));
+    a.insert(new RBTNode(13));
+    a.insert(new RBTNode(23));
+
+    std::cout << "DONEE" << std::endl;
+    std::cout << "DONEE" <<std::endl;
+    a.insert(new RBTNode(10));
 
 
 
