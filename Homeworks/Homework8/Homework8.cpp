@@ -17,13 +17,10 @@ int main()
     a.insert(new RBTNode(44));
 */
 
-    RBTNode* aRoot = new RBTNode(1);
+    RBTNode* aRoot = new RBTNode(10);
     a.insert(aRoot);
-    a.insert(new RBTNode(2));
-    a.insert(new RBTNode(3));
-    a.insert(new RBTNode(4));
     a.insert(new RBTNode(5));
-    a.insert(new RBTNode(6));
+    a.insert(new RBTNode(8));
 
 
 

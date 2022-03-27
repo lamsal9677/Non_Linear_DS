@@ -90,21 +90,22 @@ void RedBlackTree::insert(RBTNode* node) {
                 std::cout << "Parent is rotated right";
             }
 
-            if (node->parent->right == node && nodeParent->parent->left == nodeParent) {
+            else if (node->parent->right == node && nodeParent->parent->left == nodeParent) {
                 //rotate node's parent in the left direction
-                //leftRotation(nodeParent);
+                leftRotation(nodeParent);
                 std::cout << "Parent is rotated left";
             }
 
             //Case 3 When the uncle is black and line
-            if (node->parent->left == node && nodeParent->parent->left == nodeParent) {
+            else if (node->parent->left == node && nodeParent->parent->left == nodeParent) {
                 //rotate node's grandparent in the right direction
                 std::cout << "grandparent is rotated right";
+                rightRotation(grandparent);
                 nodeParent->red = !nodeParent->red;//recolor the parent
                 grandparent->red = !grandparent->red;//recolor the grandparent
             }
 
-            if (node->parent->right == node && nodeParent->parent->right == nodeParent) {
+            else if (node->parent->right == node && nodeParent->parent->right == nodeParent) {
                 //rotate node's grandparent in the left direction
                 std::cout << "grandparent is rotated left";
                 leftRotation(grandparent);
@@ -141,5 +142,25 @@ void RedBlackTree::leftRotation(RBTNode* node) {
 }
 
 void RedBlackTree::rightRotation(RBTNode* node) {
-   
+    
+    RBTNode* temp = node->left;
+    node->left = temp->right;
+
+    if (temp->right != nullptr) {
+        temp->right->parent = node;
+    }
+    temp->parent = node->parent;
+
+    if (node->parent == nullptr) {
+        root = temp;
+    }
+
+    else if (node = node->parent->left) {
+        node->parent->left = temp;
+    }
+    else {
+        node->parent->right = temp;
+    }
+    temp->right = node;
+    node->parent = temp;
 }  
