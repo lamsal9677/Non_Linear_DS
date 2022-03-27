@@ -24,15 +24,16 @@ public:
 
     // Insert a new element and rebalance the tree
     void insert(RBTNode* node);
-    void refine(RBTNode* node);
-
-    void leftRotation(RBTNode* node);
-    void rightRotation(RBTNode* node);
+    int getHeight(RBTNode* node);
+    RBTNode* get_root();
 
 
 private:
     RBTNode* root = nullptr;
     void deleteTree(RBTNode* node);
+    void refine(RBTNode* node);
+    void leftRotation(RBTNode* node);
+    void rightRotation(RBTNode* node);
 };
 
 #endif // !REDBLACKTREE_H

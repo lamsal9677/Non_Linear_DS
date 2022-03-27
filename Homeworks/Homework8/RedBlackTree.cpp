@@ -193,3 +193,24 @@ void RedBlackTree::rightRotation(RBTNode* node) {
     node->parent = temp;
     
 }  
+
+int RedBlackTree::getHeight(RBTNode* node) {
+    if (node == nullptr)
+        return -1;
+    else
+    {
+        /* compute the depth of each subtree */
+        int lDepth = getHeight(node->left);
+        int rDepth = getHeight(node->right);
+
+        /* use the larger one */
+        if (lDepth > rDepth)
+            return(lDepth + 1);
+        else return(rDepth + 1);
+    }
+
+}
+
+RBTNode* RedBlackTree::get_root() {
+    return root;
+}

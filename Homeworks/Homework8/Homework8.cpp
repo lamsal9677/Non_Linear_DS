@@ -41,6 +41,7 @@ int main()
 					auto durationRBT = duration_cast<microseconds>(stopRBT - startRBT);
 					//std::cout << "RBT Insert with size : " << i << " took us : " << durationRBT.count() << " Microseconds" << std::endl;
 					//std::cout << durationRBT.count() << std::endl;
+					aSum = aSum + a.getHeight(a.get_root());
 				}
 
 				//AVL Unsorted
@@ -76,6 +77,8 @@ int main()
 					auto durationRBT = duration_cast<microseconds>(stopRBT - startRBT);
 					//std::cout << "Half Sorted RBT Insert with size : " << i << " took us : " << durationRBT.count() << " Microseconds" << std::endl;
 					//std::cout << durationRBT.count() << std::endl;
+					cSum = cSum + c.getHeight(c.get_root());
+
 				}
 
 				//AVL Half sorted
@@ -111,6 +114,8 @@ int main()
 					auto durationRBT = duration_cast<microseconds>(stopRBT - startRBT);
 					//std::cout << "Fully Sorted RBT Insert with size : " << i << " took us : " << durationRBT.count() << " Microseconds" << std::endl;
 					//std::cout << durationRBT.count() <<std::endl;
+					eSum = eSum + e.getHeight(e.get_root());
+
 				}
 
 				//AVL Full sorted
