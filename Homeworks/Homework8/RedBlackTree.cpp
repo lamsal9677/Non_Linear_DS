@@ -67,10 +67,11 @@ void RedBlackTree::insert(RBTNode* node) {
             refine(node);
         }
         while (node->parent != nullptr) {
+            RBTNode* temp = node->parent;
             if (node->parent->red && node->red) {
                 refine(node);
             }
-            node = node->parent;
+            node = temp;
         }
     }
 
@@ -173,18 +174,22 @@ void RedBlackTree::rightRotation(RBTNode* node) {
     if (temp->right != nullptr) {
         temp->right->parent = node;
     }
-    temp->parent = node->parent;
+    temp->parent = node->parent;//bring stuff to the root
 
+    
+    //connecting to tree above
     if (node->parent == nullptr) {
         root = temp;
     }
-
-    else if (node = node->parent->left) {
+    else if (node == node->parent->left) {
         node->parent->left = temp;
     }
     else {
         node->parent->right = temp;
     }
+    //connecting to tree above
+
     temp->right = node;
     node->parent = temp;
+    
 }  
