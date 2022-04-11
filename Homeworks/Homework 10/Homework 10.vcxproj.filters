@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Homework 10.cpp">
+    <ClCompile Include="facebookGraph.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
