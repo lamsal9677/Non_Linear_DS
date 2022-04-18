@@ -10,7 +10,7 @@ int main() {
 	std::string str;
 	std::ifstream txt_file;
 	std::unordered_map<int, std::forward_list<int>> fbGraph;
-	txt_file.open("input.txt");
+	txt_file.open("facebook-links.txt");
 	if (!txt_file.is_open()) {
 		std::cout << "The file cant be opened";
 		return EXIT_FAILURE;
@@ -70,20 +70,20 @@ int main() {
 	{
 		int degreeCount = 0;
 		verticesCount++;
-		std::cout << itr->first;
+		//std::cout << itr->first;
 		for (int& b : itr->second) {
 			degreeCount++;
 			totalDegree++;
 		}
-		std::cout << " of size " << degreeCount << std::endl;
-		if (degreeCount >= 10) {
+		//std::cout << " of size " << degreeCount << std::endl;
+		if (degreeCount >= 100) {
 			largeDegree++;
 		}
 	}
 
 	//printing result
 	std::cout << "Average Degree over all vertices is " << (double)((double)totalDegree / (double)verticesCount) << std::endl;
-	std::cout << "Number of vertices with degree greater than 10 is " << largeDegree;
+	std::cout << "Number of vertices with degree greater than 100 is " << largeDegree;
 
 	txt_file.close();
 	return 0;
