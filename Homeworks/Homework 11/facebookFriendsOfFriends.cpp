@@ -10,12 +10,11 @@ int main() {
 	std::string str;
 	std::ifstream txt_file;
 	std::unordered_map<int, std::forward_list<int>> fbGraph;
-	txt_file.open("input.txt");
+	txt_file.open("facebook-links.txt");
 	if (!txt_file.is_open()) {
 		std::cout << "The file cant be opened";
 		return EXIT_FAILURE;
 	}
-
 	while (getline(txt_file, str)) {
 		std::istringstream iss(str);
 		std::string a, b;
@@ -61,30 +60,29 @@ int main() {
 		}
 	}
 
-	int verticesCount = 0;
-	int totalDegree = 0;
-	int largeDegree = 0;
-
+	int verticesCountMain = 0;
+	auto itr2 = fbGraph.begin();
+	int degreeCount = 0;
+	int numberofMainEdges = 0;
+	double result = 0.0;
+	
+	int count = 0;
 	//looping through all vertices(i.e. keys in the hashtable)
 	for (auto itr = fbGraph.begin(); itr != fbGraph.end(); itr++)
 	{
-		int degreeCount = 0;
-		verticesCount++;
-		std::cout << itr->first;
+		verticesCountMain++;
+		numberofMainEdges = 0;
+		degreeCount = 0;
 		for (int& b : itr->second) {
-			degreeCount++;
-			totalDegree++;
+			numberofMainEdges++;
+			itr2 = fbGraph.find(b);
+			for (int& c : itr2->second) {
+				degreeCount++;
+			}
 		}
-		std::cout << " of size " << degreeCount << std::endl;
-		if (degreeCount >= 10) {
-			largeDegree++;
-		}
+		result = result + ((double)degreeCount / (double)numberofMainEdges);
 	}
-
-	//printing result
-	std::cout << "Average Degree over all vertices is " << (double)((double)totalDegree / (double)verticesCount) << std::endl;
-	std::cout << "Number of vertices with degree greater than 10 is " << largeDegree;
-
+	std::cout << result / (double)verticesCountMain << std::endl;
 	txt_file.close();
 	return 0;
 }
