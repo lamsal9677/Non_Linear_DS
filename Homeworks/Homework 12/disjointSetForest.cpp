@@ -1,5 +1,8 @@
-// disjointSetForest.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
+#include <vector>
+#include <iostream>
+#include <string>
+#include <sstream>
+
 
 class Node {
 public:
@@ -9,36 +12,68 @@ public:
 	Node(int value) { this->value = value; }
 };
 
-// Create a set given a single element
 void makeSet(Node* element);
-// Return root for set given an element, using path compression if
-// pathCompression is true
 Node* findSet(Node* element, bool pathCompression);
-// Take the union of two sets given an element from each set. Both union by
-// rank and path compression heuristics can be used or not used.
-void unionSet(Node* element1, Node* element2, bool unionByRank,
-	bool pathCompression);
-
+void unionSet(Node* element1, Node* element2, bool unionByRank,bool pathCompression);
+void Link(Node* element1, Node* element2);
 void printAllElements(std::vector<Node*> elements);
 
-int main()
-{
-	bool unionByRank = true, pathCompression = true;
+void makeSet(Node* element){
+	element->parent = element;
+	element->rank = 0;
+}
 
-	// Test for correctness of functionality
+Node* findSet(Node* element, bool pathCompression) {
+	if (pathCompression) {
+		if (element != element->parent) {
+			element->parent = findSet(element->parent, pathCompression);
+		}
+	}
+	else {
+		findSet(element->parent, pathCompression);
+	}
+	return element->parent;
+}
+
+void unionSet(Node* element1, Node* element2, bool unionByRank, bool pathCompression) {
+	Link(findSet(element1, false), findSet(element2, false));
+}
+
+void Link(Node* element1, Node* element2) {
+	if (element1->rank > element2->rank) {
+		element2->parent = element1;
+	}
+	else {
+		element1->parent = element2;
+		if (element1->rank = element2->rank) {
+			element2->rank = element2->rank + 1;
+		}
+	}
+}
+
+void printAllElements(std::vector<Node*> elements) {
+	std::cout << "Element  Parent  Set Representative" << std::endl;
+	for (int i = 0; i < elements.size(); i++) {
+		std::cout << elements.at(i)->value << "  "
+			<< elements.at(i)->parent->value << "  "
+			<< findSet(elements.at(i), false)->value << std::endl;
+	}
+}
+
+
+int main() {
+
+	bool unionByRank = true, pathCompression = false;
 	int numElements = 5;
 	std::vector<Node*> elements(numElements);
-	// Create vector of pointers to elements
 	for (int i = 0; i < numElements; i++)
 		elements.at(i) = new Node(i);
 
-	// Make all singleton sets
 	for (int i = 0; i < numElements; i++) {
 		makeSet(elements.at(i));
 	}
 	printAllElements(elements);
 
-	// Test a few unions ending up with a single set of all vertices
 	unionSet(elements.at(0), elements.at(1), unionByRank, pathCompression);
 	printAllElements(elements);
 	unionSet(elements.at(0), elements.at(2), unionByRank, pathCompression);
@@ -51,23 +86,31 @@ int main()
 	return 0;
 }
 
-void printAllElements(std::vector<Node*> elements) {
-	std::cout << "Element  Parent  Set Representative" << std::endl;
-	for (int i = 0; i < elements.size(); i++) {
-		// Print element and its set representative (should be same as element)
-		std::cout << elements.at(i)->value << "  "
-			<< elements.at(i)->parent->value << "  "
-			<< findSet(elements.at(i), false)->value << std::endl;
-	}
+
+
+
+void avc() {
+	bool unionByRank = false;
+	bool pathCompression = false;
+
+	//getting user input
+	/*
+	std::cout << "Union By Rank?";
+	std::cin >> unionByRank;
+	std::cout << std::endl;
+	std::cout << "Union By Rank?";
+	std::cin >> unionByRank;
+	std::cout << std::endl;
+	*/
+
+	std::string userInput = "1 1 1";
+	//std::cout << "Element Parent Set_Representative" << std::endl;
+	//std::cin >> userInput;
+
+	std::istringstream iss(userInput);
+	std::string a, b, c;
+	iss >> a >> b >> c;
+	int num1 = stoi(a);
+	int num2 = stoi(b);
+	int num3 = stoi(c);
 }
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
