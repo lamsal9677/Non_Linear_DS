@@ -19,6 +19,7 @@ void unionSet(Node* element1, Node* element2, bool unionByRank,bool pathCompress
 void Link(Node* element1, Node* element2);
 void printAllElements(std::vector<Node*> elements);
 double checkTimeWorst(bool unionByRank, bool pathCompression, int numElements);
+double checkTimeAvg(bool unionByRank, bool pathCompression, int numElements);
 
 
 
@@ -80,14 +81,37 @@ void printAllElements(std::vector<Node*> elements) {
 
 
 int main() {
-	std::cout << "TIme in microsecond without both heruistic: " << std::endl;
+	
+	std::cout << "Worst Case " << std::endl;
+	std::cout << "Time in microsecond without both heruistic: " << std::endl;
 	std::cout << checkTimeWorst(false, false, 100) << std:: endl;
 	std::cout << checkTimeWorst(false, false, 1000) << std::endl;
 	std::cout << checkTimeWorst(false, false, 10000) << std::endl;
-	std::cout << "TIme in microsecond with both heruistic: " << std::endl;
+	std::cout << "Time in microsecond with both heruistic: " << std::endl;
 	std::cout << checkTimeWorst(true, true, 100) << std::endl;
 	std::cout << checkTimeWorst(true, true, 1000) << std::endl;
 	std::cout << checkTimeWorst(true, true, 10000) << std::endl;
+
+
+
+	std::cout << "Average Case " << std::endl;
+	std::cout << "Time in microsecond with unionByRank heruistic: " << std::endl;
+	std::cout << checkTimeAvg(true, false, 1000) << std::endl;
+	std::cout << checkTimeAvg(true, false, 10000) << std::endl;
+	std::cout << checkTimeAvg(true, false, 100000) << std::endl;
+	std::cout << checkTimeAvg(true, false, 1000000) << std::endl;
+
+	std::cout << "Time in microsecond with pathCompression heruistic: " << std::endl;
+	std::cout << checkTimeAvg(false, true, 1000) << std::endl;
+	std::cout << checkTimeAvg(false, true, 10000) << std::endl;
+	std::cout << checkTimeAvg(false, true, 100000) << std::endl;
+	std::cout << checkTimeAvg(false, true, 1000000) << std::endl;
+
+	std::cout << "Time in microsecond with both heruistic: " << std::endl;
+	std::cout << checkTimeAvg(false, true, 1000) << std::endl;
+	std::cout << checkTimeAvg(false, true, 10000) << std::endl;
+	std::cout << checkTimeAvg(false, true, 100000) << std::endl;
+	std::cout << checkTimeAvg(false, true, 1000000) << std::endl;
 
 	return 0;
 }
@@ -96,12 +120,32 @@ double checkTimeWorst(bool unionByRank, bool pathCompression, int numElements) {
 	std::vector<Node*> elements(numElements);
 	for (int i = 0; i < numElements; i++)
 		elements.at(i) = new Node(i);
+	for (int i = 0; i < numElements; i++) {
+		makeSet(elements.at(i));
+	}
 
 	auto begin = std::chrono::high_resolution_clock::now();
-		for (int i = 0; i < numElements; i++) {
-			makeSet(elements.at(i));
-			unionSet(elements.at(0), elements.at(i), unionByRank, pathCompression);
-		}
+	for (int i = 0; i < numElements; i++) {
+		unionSet(elements.at(0), elements.at(i), unionByRank, pathCompression);
+	}
+	auto end = std::chrono::high_resolution_clock::now();
+	auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+	return (double)elapsed.count() / (double)1000;
+}
+
+double checkTimeAvg(bool unionByRank, bool pathCompression, int numElements) {
+	std::vector<Node*> elements(numElements);
+	for (int i = 0; i < numElements; i++)
+		elements.at(i) = new Node(i);
+
+	for (int i = 0; i < numElements; i++) {
+		makeSet(elements.at(i));
+	}
+
+	auto begin = std::chrono::high_resolution_clock::now();
+	for (int i = 0; i < numElements; i++) {
+		unionSet(elements.at(rand() % 100 + 1), elements.at(rand() % 100 + 1), unionByRank, pathCompression);
+	}
 	auto end = std::chrono::high_resolution_clock::now();
 	auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 	return (double)elapsed.count() / (double)1000;
