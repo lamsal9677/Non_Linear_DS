@@ -2,6 +2,9 @@
 #include <iostream>
 #include <string>
 
+#include <chrono>
+
+
 class Node {
 public:
 	int value = 0;
@@ -15,6 +18,8 @@ Node* findSet(Node* element, bool pathCompression);
 void unionSet(Node* element1, Node* element2, bool unionByRank,bool pathCompression);
 void Link(Node* element1, Node* element2);
 void printAllElements(std::vector<Node*> elements);
+double checkTimeWorst(bool unionByRank, bool pathCompression, int numElements);
+
 
 
 void makeSet(Node* element){
@@ -42,13 +47,13 @@ Node* findSet(Node* element, bool pathCompression) {
 
 void unionSet(Node* element1, Node* element2, bool unionByRank, bool pathCompression) {
 	
-	Link(findSet(element1, pathCompression), findSet(element2, pathCompression));
-	//if (!unionByRank) {
-	//	findSet(element1, pathCompression)->parent = findSet(element2, pathCompression)->parent;
-	//}
-	//else {
-	//	Link(findSet(element1, pathCompression), findSet(element2, pathCompression));
-	//}
+	//Link(findSet(element1, pathCompression), findSet(element2, pathCompression));
+	if (!unionByRank) {
+		findSet(element1, pathCompression)->parent = findSet(element2, pathCompression)->parent;
+	}
+	else {
+		Link(findSet(element1, pathCompression), findSet(element2, pathCompression));
+	}
 }
 
 void Link(Node* element1, Node* element2) {
@@ -73,28 +78,31 @@ void printAllElements(std::vector<Node*> elements) {
 	}
 }
 
-int main() {
 
-	bool unionByRank = true, pathCompression = true;
-	int numElements = 5;
+int main() {
+	std::cout << "TIme in microsecond without both heruistic: " << std::endl;
+	std::cout << checkTimeWorst(false, false, 100) << std:: endl;
+	std::cout << checkTimeWorst(false, false, 1000) << std::endl;
+	std::cout << checkTimeWorst(false, false, 10000) << std::endl;
+	std::cout << "TIme in microsecond with both heruistic: " << std::endl;
+	std::cout << checkTimeWorst(true, true, 100) << std::endl;
+	std::cout << checkTimeWorst(true, true, 1000) << std::endl;
+	std::cout << checkTimeWorst(true, true, 10000) << std::endl;
+
+	return 0;
+}
+
+double checkTimeWorst(bool unionByRank, bool pathCompression, int numElements) {
 	std::vector<Node*> elements(numElements);
 	for (int i = 0; i < numElements; i++)
 		elements.at(i) = new Node(i);
 
-	for (int i = 0; i < numElements; i++) {
-		makeSet(elements.at(i));
-	}
-	printAllElements(elements);
-
-	
-	unionSet(elements.at(0), elements.at(1), unionByRank, pathCompression);
-	printAllElements(elements);
-	unionSet(elements.at(0), elements.at(2), unionByRank, pathCompression);
-	printAllElements(elements);
-	unionSet(elements.at(3), elements.at(4), unionByRank, pathCompression);
-	printAllElements(elements);
-	unionSet(elements.at(0), elements.at(4), unionByRank, pathCompression);
-	printAllElements(elements);
-	
-	return 0;
+	auto begin = std::chrono::high_resolution_clock::now();
+		for (int i = 0; i < numElements; i++) {
+			makeSet(elements.at(i));
+			unionSet(elements.at(0), elements.at(i), unionByRank, pathCompression);
+		}
+	auto end = std::chrono::high_resolution_clock::now();
+	auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+	return (double)elapsed.count() / (double)1000;
 }
